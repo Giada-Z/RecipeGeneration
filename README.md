@@ -1,7 +1,7 @@
 # RecipeGeneration
-Project for Big Data Analytics
+Project for Big Data Analytics.
 
-Data are scaped from Allrecipes.com. Each row contains the following features:
+Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all). Each row contains the following features:
   1. id: ID of the recipe (type: string)
   2. made_it_count: the number of users who have tried the recipe (type: int)
   3. time: the total time needed for the recipe (including preparing and cooking) (type: int)
