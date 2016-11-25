@@ -120,7 +120,7 @@ if __name__ == '__main__':
 	df2 = pd.DataFrame(list(collection2.find()))
 	df2 = df2.set_index('id')
 
-	#convert times to minutes
+	# convert times to minutes
 	def convtomin(time):
 	    if time == 'NA':
 	        return ''
@@ -138,7 +138,7 @@ if __name__ == '__main__':
 	        minutes = 0
 	    return minutes + hours*60 + days*60*24
 
-	#convert made it counter from units of K's into thousands
+	# convert made it counter from units of K's into thousands
 	def convcount(madecount):
 		if madecount == 'NA':
 			return ''
@@ -146,12 +146,12 @@ if __name__ == '__main__':
 			madecount = re.sub('K', '000', madecount)
 		return int(madecount)
   
-	#convert counter from K's to thousands and convert times into minutes
+	# convert counter from K's to thousands and convert times into minutes
 	df1.made_it_count = map(convcount, df1.made_it_count)
 	df1.time = map(convtomin, df1.time)
 
 	df = pd.merge(df1.iloc[:, 1:], df2.iloc[:, 1:], right_index=True, left_index=True)
-	#remove duplicates
+	# remove duplicates
 	df = df.groupby(level=0).last()
 
 	df.to_csv('Recipes.csv', encoding='utf8')
