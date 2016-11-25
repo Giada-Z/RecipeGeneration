@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import scrapy
 import sys
 import time
 import csv
@@ -19,7 +18,7 @@ import re
 ## Data Scraping
 
 def recipe_list(br):
-	for page in np.arange(316, 2000):
+	for page in np.arange(1, 2000):
 		br.get('http://allrecipes.com/recipes/?grouping=all&page=' + str(page))
 		section = br.find_element_by_id("grid")
 		urls = section.find_elements(By.CLASS_NAME, "favorite")
@@ -54,8 +53,7 @@ def scrape_recipe(br, idnumber):
 		starrating = br.find_element_by_class_name('rating-stars').get_attribute('data-ratingstars')  #unicode
 	except:
 		starrating = 'NA'
-		
-	# no. of ppl who have tried the recipe -- popularity
+
 	try:
 		madeitcount = br.find_element_by_class_name('made-it-count').text
 	except:
@@ -66,7 +64,7 @@ def scrape_recipe(br, idnumber):
 	except:
 		totalTime = 'NA'
 		
-	recoutput = idnumber+'\t'+rtitle+'\t'+starrating+'\t'+madeitcount+'\t'+totalTime
+	recoutput = idnumber + '\t' + rtitle + '\t' + starrating + '\t' + madeitcount + '\t' + totalTime
 	print recoutput
 
 	## ingredient info
@@ -93,9 +91,6 @@ def scrape_recipe(br, idnumber):
 		direction = ''
 
 	print direction + '\n'
-
-	#with open('recipes.txt', 'a') as a, open('ingredients.txt', 'a') as b:
-	#	a.write(recoutput.encode('utf8', 'ignore')); b.write(ingroutput.encode('utf8', 'ignore'))
 	
 	recipe = {'id': idnumber, 'title': rtitle.encode('utf8', 'ignore'), 'rating': starrating, 'made_it_count': madeitcount, 'time': totalTime}
 	ingred = {'id': idnumber, 'ingredient': listingr, 'direction': direction}
