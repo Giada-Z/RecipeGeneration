@@ -1,5 +1,5 @@
-# RecipeGeneration
-Project for Big Data Analytics.
+# RecipeGenerator
+This is a project for the Big Data Analytics course at Columbia.
 
 Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all). Each row contains the following features:
   1. id: ID of the recipe (type: string)
