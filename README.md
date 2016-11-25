@@ -10,7 +10,7 @@ Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all
 
 To use the scraper, you need to first download:
   1. MongoDB: 
-  (i). In terminal: \n
+  (i). In terminal:
   brew install mongodb 
   (make sure homebrew is installed first)
   (ii). To start mongodb: 
