@@ -10,15 +10,16 @@ Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all
 
 To use the scraper, you need to first download:
   1. MongoDB: 
-      in terminal: brew install mongodb 
-                  (make sure homebrew is installed first)
+      in terminal: 
+      brew install mongodb 
+      (make sure homebrew is installed first)
       start mongodb: 
-                  Linux: brew services start mongodb
-                  Windows: http://stackoverflow.com/questions/20796714/what-is-the-way-to-start-mongo-db-from-windows-7-64-bit
+      Linux: brew services start mongodb
+      Windows: http://stackoverflow.com/questions/20796714/what-is-the-way-to-start-mongo-db-from-windows-7-64-bit
   2. Chromedriver (if you are using Chrome):
       https://chromedriver.storage.googleapis.com/index.html?path=2.25/
   3. Install the following python libraries:
-        selenium, pymongo, numpy, pandas
+      selenium, pymongo, numpy, pandas
         
 After everything is installed, run the python script allrecipe.py and you are all set!
 
