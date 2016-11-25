@@ -10,10 +10,10 @@ Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all
 
 To use the scraper, you need to first download:
   1. MongoDB: 
-      in terminal: 
+      (i). in terminal: 
       brew install mongodb 
       (make sure homebrew is installed first)
-      start mongodb: 
+      (ii). start mongodb: 
       Linux: brew services start mongodb
       Windows: http://stackoverflow.com/questions/20796714/what-is-the-way-to-start-mongo-db-from-windows-7-64-bit
   2. Chromedriver (if you are using Chrome):
