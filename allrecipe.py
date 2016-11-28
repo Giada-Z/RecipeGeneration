@@ -4,8 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import scrapy
-import sys
 import time
 import csv
 import lxml.html
@@ -19,7 +17,7 @@ import re
 ## Data Scraping
 
 def recipe_list(br):
-	for page in np.arange(1241, 1900):
+	for page in np.arange(1, 1900):
 		print page
 		br.get('http://allrecipes.com/recipes/?grouping=all&page=' + str(page))
 		section = br.find_element_by_id("grid")
