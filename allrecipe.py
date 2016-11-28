@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import scrapy
 import sys
 import time
 import csv
@@ -18,7 +19,8 @@ import re
 ## Data Scraping
 
 def recipe_list(br):
-	for page in np.arange(1, 2000):
+	for page in np.arange(1241, 1900):
+		print page
 		br.get('http://allrecipes.com/recipes/?grouping=all&page=' + str(page))
 		section = br.find_element_by_id("grid")
 		urls = section.find_elements(By.CLASS_NAME, "favorite")
@@ -30,11 +32,8 @@ def recipe_list(br):
 		urls = np.unique(urls)
 		id = np.unique(id)
 		for i, url in enumerate(urls):
-			try:
-				br.get(url)
-				scrape_recipe(br, id[i])
-			except:
-				continue
+			br.get(url)
+			scrape_recipe(br, id[i])
 
 def scrape_recipe(br, idnumber):
 	## recipe info
@@ -53,7 +52,8 @@ def scrape_recipe(br, idnumber):
 		starrating = br.find_element_by_class_name('rating-stars').get_attribute('data-ratingstars')  #unicode
 	except:
 		starrating = 'NA'
-
+		
+	# no. of ppl who have tried the recipe -- popularity
 	try:
 		madeitcount = br.find_element_by_class_name('made-it-count').text
 	except:
@@ -64,7 +64,7 @@ def scrape_recipe(br, idnumber):
 	except:
 		totalTime = 'NA'
 		
-	recoutput = idnumber + '\t' + rtitle + '\t' + starrating + '\t' + madeitcount + '\t' + totalTime
+	recoutput = idnumber+'\t'+rtitle+'\t'+starrating+'\t'+madeitcount+'\t'+totalTime
 	print recoutput
 
 	## ingredient info
@@ -81,7 +81,7 @@ def scrape_recipe(br, idnumber):
 		listingr = []
 
 	ingroutput = '\n'.join(listingr)
-	print ingroutput + '\n'
+	#print ingroutput + '\n'
 
 	## cooking directions
 	try:
@@ -90,7 +90,10 @@ def scrape_recipe(br, idnumber):
 	except: 
 		direction = ''
 
-	print direction + '\n'
+	#print direction + '\n'
+
+	#with open('recipes.txt', 'a') as a, open('ingredients.txt', 'a') as b:
+	#	a.write(recoutput.encode('utf8', 'ignore')); b.write(ingroutput.encode('utf8', 'ignore'))
 	
 	recipe = {'id': idnumber, 'title': rtitle.encode('utf8', 'ignore'), 'rating': starrating, 'made_it_count': madeitcount, 'time': totalTime}
 	ingred = {'id': idnumber, 'ingredient': listingr, 'direction': direction}
@@ -120,7 +123,7 @@ if __name__ == '__main__':
 	df2 = pd.DataFrame(list(collection2.find()))
 	df2 = df2.set_index('id')
 
-	# convert times to minutes
+	#convert times to minutes
 	def convtomin(time):
 	    if time == 'NA':
 	        return ''
@@ -138,7 +141,7 @@ if __name__ == '__main__':
 	        minutes = 0
 	    return minutes + hours*60 + days*60*24
 
-	# convert made it counter from units of K's into thousands
+	#convert made it counter from units of K's into thousands
 	def convcount(madecount):
 		if madecount == 'NA':
 			return ''
@@ -146,12 +149,12 @@ if __name__ == '__main__':
 			madecount = re.sub('K', '000', madecount)
 		return int(madecount)
   
-	# convert counter from K's to thousands and convert times into minutes
+	#convert counter from K's to thousands and convert times into minutes
 	df1.made_it_count = map(convcount, df1.made_it_count)
 	df1.time = map(convtomin, df1.time)
 
 	df = pd.merge(df1.iloc[:, 1:], df2.iloc[:, 1:], right_index=True, left_index=True)
-	# remove duplicates
+	#remove duplicates
 	df = df.groupby(level=0).last()
 
 	df.to_csv('Recipes.csv', encoding='utf8')
