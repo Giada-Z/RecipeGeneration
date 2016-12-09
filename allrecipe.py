@@ -19,7 +19,7 @@ import re
 ## Data Scraping
 
 def recipe_list(br):
-	for page in np.arange(2172, 2500):
+	for page in np.arange(1, 3000):
 		print page
 		br.get('http://allrecipes.com/recipes/?grouping=all&page=' + str(page))
 		section = br.find_element_by_id("grid")
@@ -100,7 +100,7 @@ def scrape_recipe(br, idnumber):
 
 if __name__ == '__main__':
 
-	## Load data to MongoDB
+	## Store data in MongoDB
 	try:
 		connection = pymongo.MongoClient()
 		print "Connected successfully!!!"
