@@ -1,9 +1,5 @@
 import pandas as pd
 import numpy as np
-import networkx as nx
-import matplotlib.pyplot as plt
-from parallel_between import plotBetweeness
-from community_detect import detectCommunities
 import re
 import csv
 from math import log
@@ -18,19 +14,18 @@ S = np.diag(s)
 n = S.shape[0]
 total = np.trace(np.linalg.matrix_power(S, 2))
 
-# dimension reduced from n to k = 500~650 (parameter to be tested)
+# dimension reduced from n to k = 500~650 (parameter to be tuned)
 k = 650   
 for i in range(n-k):
 	S[n-i-1][n-i-1] = 0
-percent = np.trace(np.linalg.matrix_power(S, 2)) / total
+percent = np.trace(np.linalg.matrix_power(S,2)) / total
 # k should explain at least 90% of the energy
 print percent
 reducedS = S[:k,:k]
 reducedV = V[:k, ]
 factor = np.dot(np.linalg.inv(reducedS), reducedV)
 
-## Incorporate Network Features to Original Dataset
-nodeDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/Clean_nodes.csv", header=None, names=['id','ingredients'])
+## Incorporate Network Features to the Original Dataset
 
 occurin = []
 with open('/Users/Jiajia/Google Drive/Columbia/Big Data/location.csv', 'rb') as f:
@@ -38,7 +33,7 @@ with open('/Users/Jiajia/Google Drive/Columbia/Big Data/location.csv', 'rb') as 
     for row in reader:       # each row is read as a list
     	occurin.append(literal_eval(row[0]))
 
-# binary representation
+# binary feature representation
 recDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/Clean_recipes.csv", header=None, names=['ingredients'])
 m = recDF.count()['ingredients']    
 ingFeature = np.zeros((m, n))
@@ -55,12 +50,7 @@ myrecipes = myrecipes[['made_it_count', 'rating', 'time']]
 
 colname = ["PMIfeature" + str(i) for i in range(k)]
 featureDF = pd.DataFrame(reducedFeature, columns=colname)
-
 myrecipes = myrecipes.join(featureDF)
-print myrecipes.head(5)
-
-myrecipes.to_csv('recipes_1208.csv', encoding='utf8')
-
 
 ## Centrality features
 
