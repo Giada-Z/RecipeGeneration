@@ -114,3 +114,5 @@ nodeDF.index = range(nodeDF.count())
 
 # select 1960 popular ingredients
 nodeDF.loc[:1959].to_csv('Clean_nodes.csv', encoding='utf8', index=True, header=False)
+
+
