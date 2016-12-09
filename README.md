@@ -8,7 +8,7 @@ Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all
   4. direction: cooking instructions (type: string)
   5. ingredients: a list of ingredients needed for the recipe (type: list)
 
-To use the scraper, you need to download the following tools:
+To be able to run the scraper, you need to download the following tools:
   1. MongoDB: 
   (i). In terminal:
   brew install mongodb 
