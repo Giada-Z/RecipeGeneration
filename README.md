@@ -8,7 +8,7 @@ Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all
   4. direction: cooking instructions (type: string)
   5. ingredients: a list of ingredients needed for the recipe (type: list)
 
-To use the scraper, you need to first download:
+To use the scraper, you need to download the following tools:
   1. MongoDB: 
   (i). In terminal:
   brew install mongodb 
@@ -20,6 +20,3 @@ To use the scraper, you need to first download:
   https://chromedriver.storage.googleapis.com/index.html?path=2.25/
   3. Install the following python libraries:
   selenium, pymongo, numpy, pandas
-        
-After everything is installed, run the python script allrecipe.py and you are all set!
-
