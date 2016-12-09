@@ -92,3 +92,25 @@ with open('recipe_ingred.csv', 'wb') as myfile2:
 	wr2 = csv.writer(myfile2, quoting=csv.QUOTE_ALL)
 	for row in recingr_new:
 		wr2.writerow([row])
+		
+		
+## Futher Cleaning (part of ingredients were manually selected/removed)
+nodeDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/nodes.csv", header=None, names=['ingredients'])
+
+# all words to sigular
+for i in range(nodeDF.count()):
+	nodeDF.ingredients.iloc[i] = singularize(nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('olife', 'olive', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('flmy', 'flour', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('pastum', 'pasta', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('spaghettus', 'spaghetti', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('tamarus', 'tamari', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('Velveetum', 'Velveeta', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('fetum', 'feta', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('Vidalium', 'Vidalia', nodeDF.ingredients.iloc[i])
+
+nodeDF = nodeDF.drop_duplicates()
+nodeDF.index = range(nodeDF.count())
+
+# select 1960 popular ingredients
+nodeDF.loc[:1959].to_csv('Clean_nodes.csv', encoding='utf8', index=True, header=False)
