@@ -79,7 +79,7 @@ for ingl in recingr:
 ingRDD = sc.parallelize(pureingr)
 ingCount = ingRDD.map(lambda x: (x,1)).reduceByKey(lambda x,y: x+y).map(lambda (k,v): (v,k)).sortByKey(False)
 
-## Nodes: top ingredients
+## Select Top 3K Nodes
 popCount = ingCount.collect()[0:3000]
 popingr = [i[1].encode('utf8') for i in popCount if i[0] > 2]   
 
@@ -97,7 +97,7 @@ with open('recipe_ingred.csv', 'wb') as myfile2:
 ## Futher Cleaning (part of ingredients were manually selected/removed)
 nodeDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/nodes.csv", header=None, names=['ingredients'])
 
-# all words to sigular
+# convert all words to singular form
 for i in range(nodeDF.count()):
 	nodeDF.ingredients.iloc[i] = singularize(nodeDF.ingredients.iloc[i])
 	nodeDF.ingredients.iloc[i] = re.sub('olife', 'olive', nodeDF.ingredients.iloc[i])
@@ -108,11 +108,16 @@ for i in range(nodeDF.count()):
 	nodeDF.ingredients.iloc[i] = re.sub('Velveetum', 'Velveeta', nodeDF.ingredients.iloc[i])
 	nodeDF.ingredients.iloc[i] = re.sub('fetum', 'feta', nodeDF.ingredients.iloc[i])
 	nodeDF.ingredients.iloc[i] = re.sub('Vidalium', 'Vidalia', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('gras', 'grass', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('asparaguss', 'asparagus', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('chily', 'chile', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('polentum', 'polenta', nodeDF.ingredients.iloc[i])
+	nodeDF.ingredients.iloc[i] = re.sub('pancettum', 'pancetta', nodeDF.ingredients.iloc[i])
 
+nodeDF['ingredients'] = nodeDF['ingredients'].str.lower()
 nodeDF = nodeDF.drop_duplicates()
 nodeDF.index = range(nodeDF.count())
 
-# select 1960 popular ingredients
-nodeDF.loc[:1959].to_csv('Clean_nodes.csv', encoding='utf8', index=True, header=False)
+nodeDF.to_csv('Nodes.csv', encoding='utf8', index=True, header=False)
 
 
