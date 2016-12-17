@@ -7,14 +7,13 @@ from decimal import Decimal
 from ast import literal_eval
 from pattern.en import singularize, pluralize
 
-nodeDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/Clean_nodes.csv", header=None, names=['ingredients'])
+nodeDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/Nodes.csv", header=None, names=['ingredients'])
 recDF = pd.read_csv("/Users/Jiajia/Google Drive/Columbia/Big Data/Clean_recipes.csv", header=None, names=['ingredients'])
-n = nodeDF.count()['ingredients']    ## n = 1960
+n = nodeDF.count()['ingredients']    ## n = 2174
 m = recDF.count()['ingredients']    ## m = 27341
 prob_ingr = np.zeros(n)
 
 ## Compute probability of each ingredient
-nodeDF['ingredients'] = nodeDF['ingredients'].str.lower()
 recDF['ingredients'] = recDF['ingredients'].str.lower()
 
 location = []
