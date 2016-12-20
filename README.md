@@ -1,4 +1,4 @@
-# RecipeGenerator
+# Recipe Generator
 This is a project for the Big Data Analytics course at Columbia.
 
 Data are scaped from Allrecipes.com (http://allrecipes.com/recipes/?grouping=all). Each row contains the following features:
